@@ -11,21 +11,19 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Entry {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(nullable = false)
-    private LocalDateTime checkIn;
+    private String text;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(nullable = false)
-    private LocalDateTime checkOut;
+    private LocalDateTime createdAt;
 
     @JsonBackReference
     @ManyToOne
@@ -40,20 +38,20 @@ public class Entry {
         this.id = id;
     }
 
-    public LocalDateTime getCheckIn() {
-        return checkIn;
+    public String getText() {
+        return text;
     }
 
-    public void setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = checkIn;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public LocalDateTime getCheckOut() {
-        return checkOut;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCheckOut(LocalDateTime checkOut) {
-        this.checkOut = checkOut;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public User getCreator() {

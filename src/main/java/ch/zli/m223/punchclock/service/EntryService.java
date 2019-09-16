@@ -18,6 +18,10 @@ public class EntryService {
         return entryRepository.saveAndFlush(entry);
     }
 
+    public void deleteEntry(Entry entry) {
+        entryRepository.delete(entry);
+    }
+
     public List<Entry> findAll() {
         return entryRepository.findAll();
     }

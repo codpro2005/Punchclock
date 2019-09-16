@@ -21,6 +21,13 @@ repositories {
 }
 
 dependencies {
+	compile("com.auth0:java-jwt:3.4.0")
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile('javax.xml.bind:jaxb-api:2.3.0')
+
+	compile 'com.googlecode.json-simple:json-simple:1.1.1'
+	compile 'org.json:json:20171018'
+	implementation('io.jsonwebtoken:jjwt:0.2')
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-jersey'
