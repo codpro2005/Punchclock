@@ -8,12 +8,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
-import { from } from 'rxjs';
+import { SignInComponent } from './authenticate/sign-in/sign-in.component';
+import { SignUpComponent } from './authenticate/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthenticateComponent
+    AuthenticateComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

@@ -24,19 +24,5 @@
   .content {
     background-color: lightblue;
     padding: 10px;
-
-    form {
-      mat-form-field {
-        width: 100%;
-      }
-
-      .button-container {
-        text-align: center;
-
-        button {
-          margin: auto;
-        }
-      }
-    }
   }
 }

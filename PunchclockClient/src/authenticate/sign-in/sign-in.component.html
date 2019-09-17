@@ -1,0 +1,19 @@
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="sign-in">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Username" formControlName="username">
+      <mat-error *ngIf="signInForm.controls.username.hasError('required')">
+        Email is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Password" formControlName="password">
+      <mat-error *ngIf="signInForm.controls.password.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <div class="button-container">
+      <button mat-button type="submit">Sign In</button>
+    </div>
+  </form>

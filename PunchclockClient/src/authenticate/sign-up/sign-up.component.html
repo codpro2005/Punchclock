@@ -1,0 +1,26 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="sign-up">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Username" formControlName="username">
+      <mat-error *ngIf="signUpForm.controls.username.hasError('required')">
+        Email is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Password" formControlName="password">
+      <mat-error *ngIf="signUpForm.controls.password.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Confirm password" formControlName="passwordConfirm">
+      <mat-error *ngIf="signUpForm.controls.passwordConfirm.hasError('required')">
+        Password confirmation is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <div class="button-container">
+      <button mat-button type="submit">Sign Up</button>
+    </div>
+  </form>

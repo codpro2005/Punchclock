@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationEnum } from 'src/casting/AuthenticationEnum';
+import { AuthenticationPath } from 'src/casting/AuthenticationPath';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authenticate',
@@ -8,28 +8,22 @@ import { AuthenticationEnum } from 'src/casting/AuthenticationEnum';
   styleUrls: ['./authenticate.component.scss']
 })
 export class AuthenticateComponent implements OnInit {
-  public authenticationOption: AuthenticationEnum;
-  public signInForm: FormGroup;
-  public signUpForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.authenticationOption = AuthenticationEnum.SignIn;
-
-    this.signInForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-    });
-
-    this.signUpForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      passwordConfirm: ['', Validators.required],
-    });
+    this.setAuthenticationOption(AuthenticationPath.SignIn);
   }
 
-  public setAuthenticationOption(authenticationOption: AuthenticationEnum) {
-    this.authenticationOption = authenticationOption;
+  public checkNavigation(navigationCheck: string): boolean {
+    return navigationCheck === this.router.url;
+  }
+
+  public setAuthenticationOption(authenticationOption: AuthenticationPath) {
+    this.changeNavigation(authenticationOption);
+  }
+
+  private changeNavigation(navigationUrl: string) {
+    this.router.navigateByUrl(navigationUrl);
   }
 }
