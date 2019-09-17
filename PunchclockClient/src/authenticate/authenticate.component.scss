@@ -1,0 +1,42 @@
+//   .example-full-width {
+//     width: 100%;
+//   }
+
+.authentication {
+  width: 400px;
+  margin: 0 auto;
+
+  .header {
+    text-align: center;
+
+    * {
+      cursor: pointer;
+      display: inline-block;
+      width: calc(400px / 2);
+      padding: 10px 0 10px 0;
+
+      &.is-active {
+        background-color: lightblue;
+      }
+    }
+  }
+
+  .content {
+    background-color: lightblue;
+    padding: 10px;
+
+    form {
+      mat-form-field {
+        width: 100%;
+      }
+
+      .button-container {
+        text-align: center;
+
+        button {
+          margin: auto;
+        }
+      }
+    }
+  }
+}
