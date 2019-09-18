@@ -16,12 +16,14 @@
       padding: 10px 0 10px 0;
 
       &.is-active {
+        border-radius: 4px 4px 0 0;
         background-color: lightblue;
       }
     }
   }
 
   .content {
+    border-radius: 0 0 4px 4px;
     background-color: lightblue;
     padding: 10px;
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { User } from 'src/casting/user';
+import { HttpService } from '../../app/http.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,7 +11,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class SignInComponent implements OnInit {
   public signInForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private httpService: HttpService) { }
 
   ngOnInit() {
     this.signInForm = this.formBuilder.group({
@@ -19,6 +21,14 @@ export class SignInComponent implements OnInit {
   }
 
   public onSubmit() {
+    if (this.signInForm.invalid) {
+      return;
+    }
 
+    const user: User = {
+      ...this.signInForm.value
+    };
+
+    this.httpService.getJWT(user).subscribe(resp => console.log(resp));
   }
 }

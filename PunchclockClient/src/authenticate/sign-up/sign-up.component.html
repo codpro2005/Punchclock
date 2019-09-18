@@ -1,20 +1,21 @@
 <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="sign-up">
   <mat-form-field>
-    <input matInput placeholder="Username" formControlName="username" autocomplete="off">
+    <input matInput required placeholder="Username" formControlName="username" autocomplete="off">
     <mat-error *ngIf="signUpForm.controls.username.hasError('required')">
       Email is required
     </mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
-    <input matInput placeholder="Password" formControlName="password" autocomplete="off">
+    <input matInput required type="password" placeholder="Password" formControlName="password" autocomplete="off">
     <mat-error *ngIf="signUpForm.controls.password.hasError('required')">
       Password is required
     </mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
-    <input matInput placeholder="Confirm password" formControlName="passwordConfirm" [errorStateMatcher]="passwordErrorMatcher" autocomplete="off">
+    <input matInput required type="password" placeholder="Confirm password" formControlName="passwordConfirm"
+      [errorStateMatcher]="passwordErrorMatcher" autocomplete="off">
     <mat-error *ngIf="signUpForm.controls.passwordConfirm.hasError('required')">
       Password confirmation is required
     </mat-error>
@@ -25,5 +26,9 @@
   <br />
   <div class="button-container">
     <button mat-flat-button color="primary" type="submit">Sign Up</button>
+  </div>
+  <div *ngIf="responseSuccess || responseError" class="response">
+    <span *ngIf="responseSuccess" class="success">Registration Successful!</span>
+    <span *ngIf="responseError" class="error">{{responseError}}</span>
   </div>
 </form>

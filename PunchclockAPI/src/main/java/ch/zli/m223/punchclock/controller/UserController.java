@@ -43,8 +43,8 @@ public class UserController {
     @RequestMapping("/current")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public User getCurrentUser(@Valid HttpServletRequest servlet) throws IOException, NoSuchFieldException, IllegalAccessException {
-        String jwt = servlet.getHeader(HEADER_STRING).substring(TOKEN_PREFIX.length());
+    public User getCurrentUser(@Valid HttpServletRequest request) throws IOException, NoSuchFieldException, IllegalAccessException {
+        String jwt = request.getHeader(HEADER_STRING).substring(TOKEN_PREFIX.length());
         String[] split_string = jwt.split("\\.");
         String base64EncodedHeader = split_string[0];
         String base64EncodedBody = split_string[1];

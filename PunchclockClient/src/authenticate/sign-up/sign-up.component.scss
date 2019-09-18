@@ -1,13 +1,26 @@
 form {
-    mat-form-field {
-      width: 100%;
-    }
+  mat-form-field {
+    width: 100%;
+  }
 
-    .button-container {
-      text-align: center;
+  .button-container {
+    text-align: center;
 
-      button {
-        margin: auto;
-      }
+    button {
+      margin: auto;
     }
   }
+
+  .response {
+    margin: 10px 0;
+    text-align: center;
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  }
+}
