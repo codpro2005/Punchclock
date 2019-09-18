@@ -17,6 +17,6 @@ export class HttpService {
 
   public getJWT(user: User): Observable<HttpResponse<object>> {
     const contentHeader = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post(`${this.apiURL}users/test`, user, { headers: contentHeader, observe: 'response' });
+    return this.httpClient.post(`${this.apiURL}login`, user, { headers: contentHeader, observe: 'response' });
   }
 }
