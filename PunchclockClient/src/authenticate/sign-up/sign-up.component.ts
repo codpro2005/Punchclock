@@ -4,7 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 
 class PasswordConfirmErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return (Boolean)(control.touched && (form.hasError('differentPassword') || control.errors));
+    return (Boolean)(form.submitted || (control.touched && (form.hasError('differentPassword') || control.errors)));
   }
 }
 
