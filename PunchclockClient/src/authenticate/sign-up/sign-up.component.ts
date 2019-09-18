@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit {
     this.passwordConfirmed.bind(this);
   }
 
-  public passwordConfirmed(formGroup: FormGroup): any {
+  private passwordConfirmed(formGroup: FormGroup): any {
     return formGroup.value.password === formGroup.value.passwordConfirm ? null : { differentPassword: true };
   }
 
