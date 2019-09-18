@@ -1,10 +1,10 @@
-//   .example-full-width {
-//     width: 100%;
-//   }
-
 .authentication {
+  position: absolute;
   width: 400px;
-  margin: 0 auto;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -200px;
 
   .header {
     text-align: center;

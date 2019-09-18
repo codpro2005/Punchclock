@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+class PasswordConfirmErrorMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    return (Boolean)(control.touched && (form.errors || control.errors));
+  }
+}
 
 @Component({
   selector: 'app-sign-up',
@@ -8,6 +15,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
+  public passwordErrorMatcher = new PasswordConfirmErrorMatcher();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -16,7 +24,16 @@ export class SignUpComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
-    });
+    }, { validators: [this.passwordConfirmed] });
+
+    this.passwordConfirmed.bind(this);
   }
 
+  public passwordConfirmed(formGroup: FormGroup): any {
+    return formGroup.value.password === formGroup.value.passwordConfirm ? null : { differentPassword: true };
+  }
+
+  public onSubmit() {
+
+  }
 }
