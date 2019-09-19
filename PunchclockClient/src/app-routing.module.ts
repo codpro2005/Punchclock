@@ -5,10 +5,11 @@ import { AppComponent } from './app.component';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { SignInComponent } from './authenticate/sign-in/sign-in.component';
 import { SignUpComponent } from './authenticate/sign-up/sign-up.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'authenticate', pathMatch: 'full' },
-  { path: 'authenticate', component: AuthenticateComponent, canActivate: [AuthGuard], children: [
+{ path: '', component: HomeComponent/*, canActivate: [AuthGuard]*/ },
+  { path: 'authenticate', component: AuthenticateComponent, children: [
     { path: 'sign-in', component: SignInComponent },
     { path: 'sign-up', component: SignUpComponent }
   ]}

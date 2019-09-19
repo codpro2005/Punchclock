@@ -1,6 +1,6 @@
 <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="sign-in">
     <mat-form-field>
-      <input matInput required placeholder="Username" formControlName="username" autocomplete="off">
+      <input #usernameInput matInput required placeholder="Username" formControlName="username" autocomplete="off">
       <mat-error *ngIf="signInForm.controls.username.hasError('required')">
         Email is required
       </mat-error>
@@ -15,5 +15,8 @@
     <br />
     <div class="button-container">
       <button mat-flat-button color="primary" type="submit">Sign In</button>
+    </div>
+    <div *ngIf="responseError" class="response">
+      <span class="error">{{responseError}}</span>
     </div>
   </form>

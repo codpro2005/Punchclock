@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { HttpService } from '../../app/http.service';
+import { HttpService } from '../../services/http.service';
 import { User } from 'src/casting/user';
 import { Router } from '@angular/router';
 import { AuthenticationPath } from 'src/casting/AuthenticationPath';
@@ -22,6 +22,7 @@ export class SignUpComponent implements OnInit {
   public passwordErrorMatcher = new PasswordConfirmErrorMatcher();
   public responseSuccess: boolean;
   public responseError: string;
+  @ViewChild('usernameInput') usernameInput: ElementRef;
 
   constructor(private formBuilder: FormBuilder, private httpService: HttpService, private router: Router) { }
 
@@ -32,7 +33,7 @@ export class SignUpComponent implements OnInit {
       passwordConfirm: ['', Validators.required],
     }, { validators: [this.passwordConfirmed] });
 
-    this.passwordConfirmed.bind(this);
+    // this.usernameInput.nativeElement.focus();
   }
 
   private passwordConfirmed(formGroup: FormGroup): any {
@@ -55,6 +56,6 @@ export class SignUpComponent implements OnInit {
         this.responseSuccess = true;
         setTimeout(() => this.router.navigateByUrl(AuthenticationPath.SignIn), 1000);
       },
-      (error: ErrorEvent) => this.responseError = error.error.error);
+      (error: ErrorEvent) => this.responseError = error.message);
   }
 }

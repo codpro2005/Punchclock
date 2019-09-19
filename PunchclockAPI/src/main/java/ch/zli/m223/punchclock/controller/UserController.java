@@ -40,19 +40,33 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping("/current")
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public User getCurrentUser(@Valid HttpServletRequest request) throws IOException, NoSuchFieldException, IllegalAccessException {
+    private String getUser(@Valid HttpServletRequest request) {
         String jwt = request.getHeader(HEADER_STRING).substring(TOKEN_PREFIX.length());
         String[] split_string = jwt.split("\\.");
-        String base64EncodedHeader = split_string[0];
+//        String base64EncodedHeader = split_string[0];
         String base64EncodedBody = split_string[1];
-        String base64EncodedSignature = split_string[2];
+//        String base64EncodedSignature = split_string[2];
 
         String payload = new String(new Base64(true).decode(base64EncodedBody));
         JSONObject object = new JSONObject(payload);
         String username = object.getString("sub");
+        return username;
+    }
+
+    @RequestMapping("/valid")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public boolean getJWTValid(@Valid HttpServletRequest request) {
+        String username = getUser(request);
+        boolean userExists = userService.findAll().stream().anyMatch(t -> t.getUsername().equals(username));
+        return userExists;
+    }
+
+    @RequestMapping("/current")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public User getCurrentUser(@Valid HttpServletRequest request) throws IOException, NoSuchFieldException, IllegalAccessException {
+        String username = getUser(request);
         User matchingUser = userService.findAll().stream().filter(t -> t.getUsername().equals(username)).findFirst().get();
         return matchingUser;
     }

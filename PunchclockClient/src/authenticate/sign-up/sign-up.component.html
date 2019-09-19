@@ -1,6 +1,6 @@
 <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="sign-up">
   <mat-form-field>
-    <input matInput required placeholder="Username" formControlName="username" autocomplete="off">
+    <input #usernameInput matInput required placeholder="Username" formControlName="username" autocomplete="off">
     <mat-error *ngIf="signUpForm.controls.username.hasError('required')">
       Email is required
     </mat-error>
