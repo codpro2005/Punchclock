@@ -37,13 +37,15 @@ public class EntryService {
     }
 
     public Entry updateEntryCheckIn(User user, Entry newEntry) {
-        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId() && t.getId() == newEntry.getId()).findFirst().get();
+        List<Entry> currentUserEntries = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId()).collect(Collectors.toList());
+        Entry currentEntry = currentUserEntries.get((int)newEntry.getId() - 1);
         currentEntry.setCheckIn(newEntry.getCheckIn());
         return entryRepository.save(currentEntry);
     }
 
     public Entry updateEntryCheckOut(User user, Entry newEntry) {
-        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId() && t.getId() == newEntry.getId()).findFirst().get();
+        List<Entry> currentUserEntries = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId()).collect(Collectors.toList());
+        Entry currentEntry = currentUserEntries.get((int)newEntry.getId() - 1);
         currentEntry.setCheckOut(newEntry.getCheckOut());
         return entryRepository.save(currentEntry);
     }
