@@ -40,6 +40,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    /**
+     * returns the username found inside the jwt in the servlet request.
+     * @param request the request in which the jwt is located.
+     * @returns the correct username.
+     */
     private String getUsernameByJWT(HttpServletRequest request) {
         String jwt = request.getHeader(HEADER_STRING).substring(TOKEN_PREFIX.length());
         String[] split_string = jwt.split("\\.");
@@ -53,12 +58,22 @@ public class UserController {
         return username;
     }
 
+    /**
+     * returns the user found by the username.
+     * @param request the request in which the jwt is located to be passed to the getUsernameByJWT function.
+     * @returns the user
+     */
     public User getUserByJWT(@Valid HttpServletRequest request) {
         String username = this.getUsernameByJWT(request);
         User matchingUser = userService.findAll().stream().filter(t -> t.getUsername().equals(username)).findFirst().get();
         return matchingUser;
     }
 
+    /**
+     * checks if the jwt is valid or not.
+     * @param request the request in which the jwt is located.
+     * @returns the boolean value if the jwt is valid.
+     */
     @RequestMapping("/valid")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -68,14 +83,24 @@ public class UserController {
         return userExists;
     }
 
+    /**
+     * searches for the current user by the jwt.
+     * @param request the request in which the jwt is located.
+     * @returns the found user.
+     */
     @RequestMapping("/current")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public User getCurrentUser(@Valid HttpServletRequest request) throws IOException, NoSuchFieldException, IllegalAccessException {
+    public User getCurrentUser(@Valid HttpServletRequest request) {
         User matchingUser = getUserByJWT(request);
         return matchingUser;
     }
 
+    /**
+     * the function to allow the creation of a user without needing a jwt to do this process.
+     * @param user the user to be created.
+     * @returns the created user.
+     */
     @RequestMapping("/sign-up")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -84,6 +109,12 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    /**
+     * updates a specific user.
+     * @param user the user to be updated.
+     * @param request the request in which the jwt is located.
+     * @returns the updated user.
+     */
     @RequestMapping("update")
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -93,6 +124,10 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    /**
+     * deletes a specific user found inside the jwt.
+     * @param request the request in which the jwt is located
+     */
     @RequestMapping("/delete")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
