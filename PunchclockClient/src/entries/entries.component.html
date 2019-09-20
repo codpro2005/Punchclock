@@ -1,8 +1,37 @@
-Entries:
 <div *ngIf="doLoad">
-    <div *ngFor="let entry of entries">
-        <span *ngIf="entry.checkIn">Check in: {{entry.checkIn}}</span>
-        <br />
-        <span *ngIf="entry.checkOut">Check out: {{entry.checkOut}}</span>
+    <div *ngIf="entries && entries.length; else inform" class="content">
+        <h1>Entries:</h1>
+        <div *ngFor="let entry of entries; let i = index" class="entry">
+            <br />
+            <div class="value">
+                <div *ngIf="entry.checkIn">
+                    Check in:
+                    <div *ngIf="!entriesCheckInEditMode[i]">
+                        <span>{{entry.checkIn}}</span>
+                        <button (click)="setEntryCheckInEditMode(i)">Edit</button>
+                    </div>
+                    <div *ngIf="entriesCheckInEditMode[i]">
+                        <input type="text" [value]="entry.checkIn" (change)="updateValueForCheckInEntry($event, i)"/>
+                        <button (click)="updateEntryCheckIn(i)">Save</button>
+                    </div>
+                </div>
+                <div *ngIf="entry.checkOut">
+                    Check out:
+                    <div *ngIf="!entriesCheckOutEditMode[i]">
+                        <span>{{entry.checkOut}}</span>
+                        <button (click)="setEntryCheckOutEditMode(i)">Edit</button>
+                    </div>
+                    <div *ngIf="entriesCheckOutEditMode[i]">
+                        <input type="text" [value]="entry.checkOut" (change)="updateValueForCheckOutEntry($event, i)"/>
+                        <button (click)="updateEntryCheckOut(i)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button (click)="deleteAllEntries()">Delete all Entries</button>
     </div>
 </div>
+
+<ng-template #inform>
+    Keine Einträge verfügbar
+</ng-template>

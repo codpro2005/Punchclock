@@ -46,7 +46,7 @@ export class HttpService {
 
   public showCurrentEntries() {
     const contentHeader = this.getAuthorizationHeader();
-    return this.httpClient.get<Entry[]>(`${this.apiURL}entries`, { headers: contentHeader });
+    return this.httpClient.get<Entry[]>(`${this.apiURL}entries/current`, { headers: contentHeader });
   }
 
   public logCheckInTime() {
@@ -59,9 +59,19 @@ export class HttpService {
     return this.httpClient.post(`${this.apiURL}entries/checkOut`, {}, { headers: contentHeader });
   }
 
+  public updateEntryCheckIn(entry: any): Observable<Entry> {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post<Entry>(`${this.apiURL}entries/checkIn/update`, entry, { headers: contentHeader });
+  }
+
+  public updateEntryCheckOut(entry: any): Observable<Entry> {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post<Entry>(`${this.apiURL}entries/checkOut/update`, entry, { headers: contentHeader });
+  }
+
   public deleteAllCurrentUserEntries() {
     const contentHeader = this.getAuthorizationHeader();
-    return this.httpClient.get(`${this.apiURL}entries/current`, { headers: contentHeader });
+    return this.httpClient.get(`${this.apiURL}entries/current/delete`, { headers: contentHeader });
   }
 
   private getAuthorizationHeader(): HttpHeaders {

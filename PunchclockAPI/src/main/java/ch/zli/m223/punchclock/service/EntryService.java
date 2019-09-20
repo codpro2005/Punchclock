@@ -36,6 +36,23 @@ public class EntryService {
         return entryRepository.save(currentEntry);
     }
 
+    public Entry updateEntryCheckIn(User user, Entry newEntry) {
+        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId() && t.getId() == newEntry.getId()).findFirst().get();
+        currentEntry.setCheckIn(newEntry.getCheckIn());
+        return entryRepository.save(currentEntry);
+    }
+
+    public Entry updateEntryCheckOut(User user, Entry newEntry) {
+        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId() && t.getId() == newEntry.getId()).findFirst().get();
+        currentEntry.setCheckOut(newEntry.getCheckOut());
+        return entryRepository.save(currentEntry);
+    }
+
+    public List<Entry> getAllCurrentUserEntries(User user) {
+        List<Entry> currentEntries = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId()).collect(Collectors.toList());
+        return currentEntries;
+    }
+
     public void deleteAllCurrentUserEntries(User user) {
         List<Entry> currentEntries = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId()).collect(Collectors.toList());
         entryRepository.deleteAll(currentEntries);

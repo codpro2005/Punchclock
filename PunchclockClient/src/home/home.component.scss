@@ -1,5 +1,4 @@
 .home {
-    
   mat-toolbar {
     .title {
       float: left;
@@ -21,4 +20,11 @@
       }
     }
   }
+}
+
+.info,
+.info:hover {
+  cursor: default;
+  background-color: black;
+  color: white;
 }

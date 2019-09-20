@@ -72,7 +72,31 @@ public class EntryController {
         return entryService.createEntryCheckOut(dateTime, matchingUser);
     }
 
+    @RequestMapping("/checkIn/update")
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Entry updateEntryCheckIn(@RequestBody Entry entry, HttpServletRequest request) {
+        User matchingUser = userController.getUserByJWT(request);
+        return entryService.updateEntryCheckIn(matchingUser, entry);
+    }
+
+    @RequestMapping("/checkOut/update")
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Entry updateEntryCheckOut(@RequestBody Entry entry, HttpServletRequest request) {
+        User matchingUser = userController.getUserByJWT(request);
+        return entryService.updateEntryCheckOut(matchingUser, entry);
+    }
+
     @RequestMapping("/current")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Entry> getAllCurrentUserEntries(@Valid HttpServletRequest request) {
+        User matchingUser = userController.getUserByJWT(request);
+        return entryService.getAllCurrentUserEntries(matchingUser);
+    }
+
+    @RequestMapping("/current/delete")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllCurrentUserEntries(@Valid HttpServletRequest request) {

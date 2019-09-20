@@ -8,12 +8,13 @@
       <button (click)="showEntries()" mat-button>Entries</button>
       <mat-icon [matMenuTriggerFor]="profileMenu" class="profile">account_circle</mat-icon>
       <mat-menu #profileMenu="matMenu">
-          <button (click)="signOut()" mat-menu-item>Sign out</button>
-          <button (click)="changeUser()" mat-menu-item>Change User</button>
-          <button (click)="deleteUser()" mat-menu-item>Delete User</button>
-          <button (click)="deleteAllEntries()" mat-menu-item>Delete all Entries</button>
+        <span mat-menu-item class="info">{{user.username}}</span>
+        <button (click)="signOut()" mat-menu-item>Sign out</button>
+        <button (click)="changeUser()" mat-menu-item>Adjust User</button>
+        <button (click)="deleteUser()" mat-menu-item>Delete User</button>
       </mat-menu>
     </div>
   </mat-toolbar>
 </div>
-<router-outlet></router-outlet>
+<app-profile *ngIf="isChange" (userUpdate)="updateUser($event)"></app-profile>
+<router-outlet *ngIf="!isChange"></router-outlet>

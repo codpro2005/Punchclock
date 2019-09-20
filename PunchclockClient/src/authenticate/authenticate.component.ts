@@ -14,7 +14,7 @@ export class AuthenticateComponent implements OnInit {
   constructor(private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
-    this.httpService.checkJWTValid().subscribe(() => this.router.navigateByUrl(''), () => this.doLoad = true);
+    this.httpService.getCurrentUser().subscribe(() => this.router.navigateByUrl(''), () => this.doLoad = true);
     this.setAuthenticationOption(AuthenticationPath.SignIn);
   }
 

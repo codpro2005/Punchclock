@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
   public passwordErrorMatcher = new PasswordConfirmErrorMatcher();
   public responseSuccess: boolean;
   public responseError: string;
-  @ViewChild('usernameInput', { static: true }) usernameInput: ElementRef;
+  // @ViewChild('usernameInput', { static: true }) usernameInput: ElementRef;
 
   constructor(private formBuilder: FormBuilder, private httpService: HttpService, private router: Router) { }
 

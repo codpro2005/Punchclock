@@ -13,20 +13,26 @@ import { formatDate } from '@angular/common';
 export class HomeComponent implements OnInit {
   public doLoad: boolean;
   public user: User;
+  public isChange: boolean;
 
   constructor(private httpService: HttpService, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.httpService.checkJWTValid().subscribe(
-      () => this.doLoad = true,
-      () => this.router.navigateByUrl('authenticate'));
+    this.httpService.getCurrentUser().subscribe(user => {
+      this.user = user;
+      this.doLoad = true;
+    },
+    () => this.navigateTo('authenticate'));
+  }
 
-    this.httpService.getCurrentUser().subscribe();
+  public updateUser(newUser: any) {
+    console.log(newUser);
+    this.user = newUser;
   }
 
   public showEntries() {
+    this.isChange = false;
     this.navigateTo('entries');
-    this.httpService.showCurrentEntries().subscribe();
   }
 
   public signOut() {
@@ -44,7 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   public changeUser() {
-    this.navigateTo('/profile');
+    this.isChange = true;
   }
 
   public deleteUser() {
@@ -52,10 +58,6 @@ export class HomeComponent implements OnInit {
       this.cookieService.delete(this.httpService.jwtKey);
       this.navigateTo('/authenticate');
     }); // todo
-  }
-
-  public deleteAllEntries() {
-    this.httpService.deleteAllCurrentUserEntries().subscribe(() => this.navigateTo(''));
   }
 
   private navigateTo(route: string) {

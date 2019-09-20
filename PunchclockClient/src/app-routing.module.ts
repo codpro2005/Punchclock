@@ -11,7 +11,6 @@ import { EntriesComponent } from './entries/entries.component';
 
 const routes: Routes = [
 { path: '', component: HomeComponent/*, canActivate: [AuthGuard]*/, children: [
-  { path: 'profile', component: ProfileComponent },
   { path: 'entries', component: EntriesComponent }
 ] },
   { path: 'authenticate', component: AuthenticateComponent, children: [

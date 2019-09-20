@@ -14,7 +14,7 @@ import { formatDate } from '@angular/common';
 export class SignInComponent implements OnInit {
   public signInForm: FormGroup;
   public responseError: string;
-  @ViewChild('usernameInput', { static: true }) usernameInput: ElementRef;
+  // @ViewChild('usernameInput', { static: true }) usernameInput: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,

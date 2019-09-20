@@ -16,7 +16,8 @@
     <div class="button-container">
       <button mat-flat-button color="primary" type="submit">Update</button>
     </div>
-    <div *ngIf="responseError" class="response">
-      <span class="error">{{responseError}}</span>
+    <div *ngIf="responseError || success" class="response">
+      <span *ngIf="responseError" class="error">{{responseError}}</span>
+      <span *ngIf="success">User updated!</span>
     </div>
   </form>
