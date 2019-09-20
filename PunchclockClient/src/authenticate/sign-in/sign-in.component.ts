@@ -4,6 +4,7 @@ import { User } from 'src/casting/user';
 import { HttpService } from '../../services/http.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
@@ -42,9 +43,14 @@ export class SignInComponent implements OnInit {
     this.httpService.getJWT(user).subscribe(
       resp => {
         const jwt = resp.headers.get(this.httpService.jwtKey);
-        this.cookieService.set(this.httpService.jwtKey, jwt);
+        const jwtKey = this.httpService.jwtKey;
+        this.cookieService.delete(jwtKey);
+        this.cookieService.set(jwtKey, jwt);
         this.httpService.jwt = jwt;
+        const date = new Date();
+        const formattedDate = formatDate(date, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+02');
         this.router.navigateByUrl('');
+        // this.httpService.logCheckInTime(formattedDate).subscribe(() => this.router.navigateByUrl(''));
       },
       (error: ErrorEvent) => this.responseError = error.message);
   }

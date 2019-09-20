@@ -1,0 +1,24 @@
+.home {
+    
+  mat-toolbar {
+    .title {
+      float: left;
+    }
+
+    .space {
+      flex: 1 1 auto;
+    }
+
+    .content {
+      float: right;
+    }
+
+    mat-icon {
+      vertical-align: middle;
+
+      &.profile {
+        cursor: pointer;
+      }
+    }
+  }
+}

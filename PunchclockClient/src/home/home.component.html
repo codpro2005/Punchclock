@@ -1,3 +1,17 @@
-<mat-toolbar color="primary">
-  <span>My Application</span>
-</mat-toolbar>
+<div *ngIf="doLoad" class="home">
+  <mat-toolbar color="primary">
+    <div class="title">
+      <span>Punchclock</span>
+    </div>
+    <div class="space"></div>
+    <div class="content">
+      <mat-icon [matMenuTriggerFor]="profileMenu" class="profile">account_circle</mat-icon>
+      <mat-menu #profileMenu="matMenu">
+          <button (click)="signOut()" mat-menu-item>Sign out</button>
+          <button (click)="changeUser()" mat-menu-item>Change</button>
+          <button (click)="deleteUser()" mat-menu-item>Delete</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</div>
+<router-outlet></router-outlet>

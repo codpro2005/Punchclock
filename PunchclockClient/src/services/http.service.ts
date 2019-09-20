@@ -24,7 +24,34 @@ export class HttpService {
   }
 
   public checkJWTValid(): Observable<boolean> {
-    const contentHeader = new HttpHeaders({ Authorization: this.cookieService.get(this.jwtKey) });
+    const contentHeader = this.getAuthorizationHeader();
     return this.httpClient.get<boolean>(`${this.apiURL}users/valid`, { headers: contentHeader });
+  }
+
+  public getCurrentUser(): Observable<User> {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.get<User>(`${this.apiURL}users/current`, { headers: contentHeader });
+  }
+
+  public deleteCurrentUser() {
+    const contentHeader = {
+      ...this.getAuthorizationHeader(),
+      'Access-Control-Allow-Origin': '*',
+    };
+    return this.httpClient.delete(`${this.apiURL}users`, { headers: contentHeader });
+  }
+
+  public logCheckInTime(date: string) {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post(`${this.apiURL}entries/checkIn`, { headers: contentHeader });
+  }
+
+  public logCheckOutTime(date: string) {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post(`${this.apiURL}entries/checkOut`, { headers: contentHeader });
+  }
+
+  private getAuthorizationHeader(): HttpHeaders {
+    return new HttpHeaders({ Authorization: this.cookieService.get(this.jwtKey) });
   }
 }

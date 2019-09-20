@@ -1,4 +1,4 @@
-<div class="authentication">
+<div *ngIf="doLoad" class="authentication">
   <div class="header">
     <span (click)="setAuthenticationOption('/authenticate/sign-in')" class="sign-in" [class.is-active]="checkNavigation('/authenticate/sign-in')">
       Sign in

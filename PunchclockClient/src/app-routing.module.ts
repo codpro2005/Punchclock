@@ -6,9 +6,12 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { SignInComponent } from './authenticate/sign-in/sign-in.component';
 import { SignUpComponent } from './authenticate/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-{ path: '', component: HomeComponent/*, canActivate: [AuthGuard]*/ },
+{ path: '', component: HomeComponent/*, canActivate: [AuthGuard]*/, children: [
+  { path: 'profile', component: ProfileComponent }
+] },
   { path: 'authenticate', component: AuthenticateComponent, children: [
     { path: 'sign-in', component: SignInComponent },
     { path: 'sign-up', component: SignUpComponent }

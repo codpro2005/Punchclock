@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationPath } from 'src/casting/AuthenticationPath';
 import { Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-authenticate',
@@ -8,10 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./authenticate.component.scss']
 })
 export class AuthenticateComponent implements OnInit {
+  public doLoad: boolean;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
+    this.httpService.checkJWTValid().subscribe(() => this.router.navigateByUrl(''), () => this.doLoad = true);
     this.setAuthenticationOption(AuthenticationPath.SignIn);
   }
 

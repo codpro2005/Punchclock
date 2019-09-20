@@ -40,7 +40,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    private String getUser(@Valid HttpServletRequest request) {
+    private String getUsernameByJWT(HttpServletRequest request) {
         String jwt = request.getHeader(HEADER_STRING).substring(TOKEN_PREFIX.length());
         String[] split_string = jwt.split("\\.");
 //        String base64EncodedHeader = split_string[0];
@@ -53,11 +53,17 @@ public class UserController {
         return username;
     }
 
+    public User getUserByJWT(@Valid HttpServletRequest request) {
+        String username = this.getUsernameByJWT(request);
+        User matchingUser = userService.findAll().stream().filter(t -> t.getUsername().equals(username)).findFirst().get();
+        return matchingUser;
+    }
+
     @RequestMapping("/valid")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public boolean getJWTValid(@Valid HttpServletRequest request) {
-        String username = getUser(request);
+        String username = getUsernameByJWT(request);
         boolean userExists = userService.findAll().stream().anyMatch(t -> t.getUsername().equals(username));
         return userExists;
     }
@@ -66,8 +72,7 @@ public class UserController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public User getCurrentUser(@Valid HttpServletRequest request) throws IOException, NoSuchFieldException, IllegalAccessException {
-        String username = getUser(request);
-        User matchingUser = userService.findAll().stream().filter(t -> t.getUsername().equals(username)).findFirst().get();
+        User matchingUser = getUserByJWT(request);
         return matchingUser;
     }
 
@@ -81,5 +86,8 @@ public class UserController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@Valid @RequestBody User user) { userService.deleteUser(user); }
+    public void deleteUser(@Valid HttpServletRequest request) {
+        User matchingUser = getUserByJWT(request);
+        userService.deleteUser(matchingUser);
+    }
 }
