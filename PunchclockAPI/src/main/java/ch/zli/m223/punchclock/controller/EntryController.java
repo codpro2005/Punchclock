@@ -23,18 +23,32 @@ public class EntryController {
         this.userController = userController;
     }
 
+    /**
+     * Returns all entries
+     * @returns List of entries
+     */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Entry> getAllEntries() {
         return entryService.findAll();
     }
 
+    /**
+     * Adds the passed entry into the database
+     * @param entry
+     * @returns the added entry
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Entry createEntry(@Valid @RequestBody Entry entry) {
         return entryService.createEntry(entry);
     }
 
+    /**
+     * Adds a new entry with the checkIn value of the current time of calling the method and the creator id of the defined jwt into the database
+     * @param request
+     * @returns the added entry
+     */
     @RequestMapping("/checkIn")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,6 +58,11 @@ public class EntryController {
         return entryService.createEntryCheckIn(dateTime, matchingUser);
     }
 
+    /**
+     * Adds a checkOut value of the current time for the first entry found with no checkOut value for the user id of the defined jwt and saved it into the database.
+     * @param request
+     * @return
+     */
     @RequestMapping("/checkOut")
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -51,6 +70,14 @@ public class EntryController {
         LocalDateTime dateTime = LocalDateTime.now();
         User matchingUser = userController.getUserByJWT(request);
         return entryService.createEntryCheckOut(dateTime, matchingUser);
+    }
+
+    @RequestMapping("/current")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllCurrentUserEntries(@Valid HttpServletRequest request) {
+        User matchingUser = userController.getUserByJWT(request);
+        entryService.deleteAllCurrentUserEntries(matchingUser);
     }
 
     @DeleteMapping

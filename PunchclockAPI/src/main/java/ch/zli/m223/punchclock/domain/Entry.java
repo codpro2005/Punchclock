@@ -24,7 +24,6 @@ public class Entry {
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @Column(nullable = false)
     private LocalDateTime checkOut;
 
     @JsonBackReference

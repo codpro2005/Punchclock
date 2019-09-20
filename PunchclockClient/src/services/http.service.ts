@@ -4,6 +4,7 @@ import { User } from '../casting/user';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { Entry } from 'src/casting/entry';
 
 @Injectable({
   providedIn: 'root'
@@ -33,25 +34,37 @@ export class HttpService {
     return this.httpClient.get<User>(`${this.apiURL}users/current`, { headers: contentHeader });
   }
 
+  public updateCurrentUser(newUser: User): Observable<User> {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post<User>(`${this.apiURL}users/update`, newUser, { headers: contentHeader });
+  }
+
   public deleteCurrentUser() {
-    const contentHeader = {
-      ...this.getAuthorizationHeader(),
-      'Access-Control-Allow-Origin': '*',
-    };
-    return this.httpClient.delete(`${this.apiURL}users`, { headers: contentHeader });
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.get(`${this.apiURL}users/delete`, { headers: contentHeader });
   }
 
-  public logCheckInTime(date: string) {
+  public showCurrentEntries() {
     const contentHeader = this.getAuthorizationHeader();
-    return this.httpClient.post(`${this.apiURL}entries/checkIn`, { headers: contentHeader });
+    return this.httpClient.get<Entry[]>(`${this.apiURL}entries`, { headers: contentHeader });
   }
 
-  public logCheckOutTime(date: string) {
+  public logCheckInTime() {
     const contentHeader = this.getAuthorizationHeader();
-    return this.httpClient.post(`${this.apiURL}entries/checkOut`, { headers: contentHeader });
+    return this.httpClient.post(`${this.apiURL}entries/checkIn`, {} , { headers: contentHeader });
+  }
+
+  public logCheckOutTime() {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.post(`${this.apiURL}entries/checkOut`, {}, { headers: contentHeader });
+  }
+
+  public deleteAllCurrentUserEntries() {
+    const contentHeader = this.getAuthorizationHeader();
+    return this.httpClient.get(`${this.apiURL}entries/current`, { headers: contentHeader });
   }
 
   private getAuthorizationHeader(): HttpHeaders {
-    return new HttpHeaders({ Authorization: this.cookieService.get(this.jwtKey) });
+    return new HttpHeaders({ Authorization: this.cookieService.get(this.jwtKey), 'Content-Type': 'application/json' });
   }
 }

@@ -5,11 +5,13 @@
     </div>
     <div class="space"></div>
     <div class="content">
+      <button (click)="showEntries()" mat-button>Entries</button>
       <mat-icon [matMenuTriggerFor]="profileMenu" class="profile">account_circle</mat-icon>
       <mat-menu #profileMenu="matMenu">
           <button (click)="signOut()" mat-menu-item>Sign out</button>
-          <button (click)="changeUser()" mat-menu-item>Change</button>
-          <button (click)="deleteUser()" mat-menu-item>Delete</button>
+          <button (click)="changeUser()" mat-menu-item>Change User</button>
+          <button (click)="deleteUser()" mat-menu-item>Delete User</button>
+          <button (click)="deleteAllEntries()" mat-menu-item>Delete all Entries</button>
       </mat-menu>
     </div>
   </mat-toolbar>

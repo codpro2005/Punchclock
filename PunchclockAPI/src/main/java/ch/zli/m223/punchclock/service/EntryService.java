@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EntryService {
@@ -30,9 +31,14 @@ public class EntryService {
     }
 
     public Entry createEntryCheckOut(LocalDateTime dateTime, User creator) {
-        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == creator.getId()).findFirst().get();
+        Entry currentEntry = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == creator.getId() && t.getCheckOut() == null).findFirst().get();
         currentEntry.setCheckOut(dateTime);
         return entryRepository.save(currentEntry);
+    }
+
+    public void deleteAllCurrentUserEntries(User user) {
+        List<Entry> currentEntries = entryRepository.findAll().stream().filter(t -> t.getCreator().getId() == user.getId()).collect(Collectors.toList());
+        entryRepository.deleteAll(currentEntries);
     }
 
     public void deleteEntry(Entry entry) {

@@ -1,3 +1,22 @@
-<p>
-  profile works!
-</p>
+<form *ngIf="doLoad" [formGroup]="changeUserForm" (ngSubmit)="onSubmit()" class="sign-in">
+    <mat-form-field>
+      <input matInput required placeholder="Username" formControlName="username" autocomplete="off">
+      <mat-error *ngIf="changeUserForm.controls.username.hasError('required')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input matInput required type="password" placeholder="Password" formControlName="password" autocomplete="off">
+      <mat-error *ngIf="changeUserForm.controls.password.hasError('required')">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <div class="button-container">
+      <button mat-flat-button color="primary" type="submit">Update</button>
+    </div>
+    <div *ngIf="responseError" class="response">
+      <span class="error">{{responseError}}</span>
+    </div>
+  </form>

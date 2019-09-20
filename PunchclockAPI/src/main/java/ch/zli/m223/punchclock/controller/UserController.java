@@ -84,10 +84,20 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @DeleteMapping
+    @RequestMapping("update")
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public User updateUser(@Valid @RequestBody User user,@Valid HttpServletRequest request) {
+        user.setId(getUserByJWT(request).getId());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userService.updateUser(user);
+    }
+
+    @RequestMapping("/delete")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@Valid HttpServletRequest request) {
         User matchingUser = getUserByJWT(request);
-        userService.deleteUser(matchingUser);
+        this.userService.deleteUser(matchingUser);
     }
 }

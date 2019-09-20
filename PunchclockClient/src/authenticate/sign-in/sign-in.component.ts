@@ -14,7 +14,7 @@ import { formatDate } from '@angular/common';
 export class SignInComponent implements OnInit {
   public signInForm: FormGroup;
   public responseError: string;
-  @ViewChild('usernameInput') usernameInput: ElementRef;
+  @ViewChild('usernameInput', { static: true }) usernameInput: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,10 +47,9 @@ export class SignInComponent implements OnInit {
         this.cookieService.delete(jwtKey);
         this.cookieService.set(jwtKey, jwt);
         this.httpService.jwt = jwt;
-        const date = new Date();
-        const formattedDate = formatDate(date, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+02');
-        this.router.navigateByUrl('');
-        // this.httpService.logCheckInTime(formattedDate).subscribe(() => this.router.navigateByUrl(''));
+        // const date = new Date();
+        // const formattedDate = formatDate(date, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+02');
+        this.httpService.logCheckInTime().subscribe(() => this.router.navigateByUrl(''));
       },
       (error: ErrorEvent) => this.responseError = error.message);
   }

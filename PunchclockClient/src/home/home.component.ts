@@ -21,18 +21,26 @@ export class HomeComponent implements OnInit {
       () => this.doLoad = true,
       () => this.router.navigateByUrl('authenticate'));
 
-    this.httpService.getCurrentUser().subscribe(user => this.user = user);
+    this.httpService.getCurrentUser().subscribe();
+  }
+
+  public showEntries() {
+    this.navigateTo('entries');
+    this.httpService.showCurrentEntries().subscribe();
   }
 
   public signOut() {
-    const date = new Date();
-    const formattedDate = formatDate(date, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+02');
-    this.cookieService.delete(this.httpService.jwtKey);
-    this.navigateTo('/authenticate');
-    // this.httpService.logCheckOutTime(formattedDate).subscribe(() => {
-    //   this.cookieService.delete(this.httpService.jwtKey);
-    //   this.navigateTo('/authenticate');
-    // });
+  //   const date = new Date();
+  //   const formattedDate = formatDate(date, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+02');
+    this.httpService.logCheckOutTime().subscribe(
+      () => {
+      this.cookieService.delete(this.httpService.jwtKey);
+      this.navigateTo('/authenticate');
+    },
+    () => {
+      this.cookieService.delete(this.httpService.jwtKey);
+      this.navigateTo('/authenticate');
+    });
   }
 
   public changeUser() {
@@ -40,7 +48,14 @@ export class HomeComponent implements OnInit {
   }
 
   public deleteUser() {
-    this.httpService.deleteCurrentUser().subscribe(() => this.navigateTo('')); // todo
+    this.httpService.deleteCurrentUser().subscribe(() => {
+      this.cookieService.delete(this.httpService.jwtKey);
+      this.navigateTo('/authenticate');
+    }); // todo
+  }
+
+  public deleteAllEntries() {
+    this.httpService.deleteAllCurrentUserEntries().subscribe(() => this.navigateTo(''));
   }
 
   private navigateTo(route: string) {

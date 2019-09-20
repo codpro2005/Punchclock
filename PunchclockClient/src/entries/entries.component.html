@@ -1,0 +1,8 @@
+Entries:
+<div *ngIf="doLoad">
+    <div *ngFor="let entry of entries">
+        <span *ngIf="entry.checkIn">Check in: {{entry.checkIn}}</span>
+        <br />
+        <span *ngIf="entry.checkOut">Check out: {{entry.checkOut}}</span>
+    </div>
+</div>
