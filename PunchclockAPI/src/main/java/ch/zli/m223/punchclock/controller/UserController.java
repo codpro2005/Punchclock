@@ -72,6 +72,16 @@ public class UserController {
     }
 
     /**
+     * deletes a specific user by passed user.
+     * @param user the user to be deleted
+     */
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(User user) {
+        this.userService.deleteUser(user);
+    }
+
+    /**
      * returns the username found inside the jwt in the servlet request.
      * @param request the request in which the jwt is located.
      * @returns the correct username.

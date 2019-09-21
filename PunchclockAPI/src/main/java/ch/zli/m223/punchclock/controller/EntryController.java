@@ -45,6 +45,14 @@ public class EntryController {
     }
 
     /**
+     * Deletes the specific entry which has been passed.
+     * @param entry the entry to be deleted.
+     */
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEntry(@Valid @RequestBody Entry entry) { entryService.deleteEntry(entry); }
+
+    /**
      * Adds a new entry with the checkIn value of the current time of calling the method and the creator id of the defined jwt into the database.
      * @param request the request to read the jwt and get the user out of it.
      * @returns the added entry.
@@ -124,12 +132,4 @@ public class EntryController {
         User matchingUser = userController.getUserByJWT(request);
         entryService.deleteAllCurrentUserEntries(matchingUser);
     }
-
-    /**
-     * Deletes the specific entry which has been passed.
-     * @param entry the entry to be deleted.
-     */
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteEntry(@Valid @RequestBody Entry entry) { entryService.deleteEntry(entry); }
 }
