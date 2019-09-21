@@ -19,7 +19,6 @@ export class EntriesComponent implements OnInit {
 
   ngOnInit() {
     this.httpService.showCurrentEntries().subscribe(entries => {
-      console.log(entries);
       this.entries = entries;
       this.entries.forEach(() => {
         this.entriesCheckInEditMode.push(false);
