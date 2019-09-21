@@ -1,3 +1,5 @@
+#### Github Repo
+https://github.com/codpro2005/Punchclock
 # Punchclock
 ## Introduction
 
