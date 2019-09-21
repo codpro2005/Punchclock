@@ -1,5 +1,6 @@
 package ch.zli.m223.punchclock.controller;
 
+import ch.zli.m223.punchclock.domain.Entry;
 import ch.zli.m223.punchclock.domain.User;
 import ch.zli.m223.punchclock.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static ch.zli.m223.punchclock.security.SecurityConstants.HEADER_STRING;
@@ -32,6 +36,29 @@ public class UserController {
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
+        this.generateUsers();
+    }
+
+    /**
+     * Script to generate users
+     * @return generated users
+     */
+    private List<User> generateUsers() {
+        User user1 = new User("Danilo", "Passwort123");
+        User user2 = new User("Pascal", "Pascalwort123");
+        User user3 = new User("Official Donald Trump", "BigWalls1");
+        Entry entry1 = new Entry(LocalDateTime.now().minusHours(3), LocalDateTime.now().minusHours(1), user1);
+        Entry entry2 = new Entry(LocalDateTime.now().minusMinutes(5), LocalDateTime.now(), user1);
+        Entry entry3 = new Entry(LocalDateTime.now().minusHours(5), LocalDateTime.now().minusHours(2), user3);
+        user1.setEntries(Arrays.asList(entry1, entry2));
+        user3.setEntries(Arrays.asList(entry3));
+        List<User> users = Arrays.asList(user1, user2, user3);
+        List<User> addedUsers = new ArrayList<>();
+        for (User user : users) {
+            addedUsers.add(this.createUser(user));
+        }
+        return addedUsers;
     }
 
     /**

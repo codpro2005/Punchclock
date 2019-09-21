@@ -18,6 +18,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> createUsers(List<User> users) {
+        return userRepository.saveAll(users);
+    }
+
     public User updateUser(User user) { return userRepository.save(user); }
 
     public void deleteUser(User user) {

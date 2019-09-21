@@ -30,6 +30,16 @@ public class Entry {
     @JoinColumn(nullable = false)
     private User creator;
 
+    public Entry() {
+
+    }
+
+    public Entry(LocalDateTime checkIn, LocalDateTime checkOut, User creator) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.creator = creator;
+    }
+
     public long getId() {
         return id;
     }
